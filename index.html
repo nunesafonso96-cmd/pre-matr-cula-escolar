@@ -482,11 +482,24 @@ footer {
 
 
 <!-- JAVASCRIPT: TODAS AS FUNÇÕES FICAM AQUI -->
-
+    
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
 <script>
 
-function mostrarTela(id) {
 
+// 1. CONFIGURAÇÃO DA CONEXÃO
+const SUPABASE_URL = "https://sxplgctirrlqamqjgtza.supabase.co";
+const SUPABASE_KEY = "sb_publishable_1l46YQjKns1yKuEmanX5xw_icrhqnzz";
+
+const clienteSupabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// 2. TROCA DE TELAS
+function mostrarTela(id) {
     const telas = document.querySelectorAll(".tela");
 
     telas.forEach(function(tela) {
@@ -499,22 +512,73 @@ function mostrarTela(id) {
         top: 0,
         behavior: "smooth"
     });
-
 }
 
 
+// 3. ENVIO DA PRÉ-MATRÍCULA
 document.getElementById("formMatricula")
-.addEventListener("submit", function(event) {
+.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    alert(
-        "Formulário preenchido com sucesso!\n\n" +
-        "Esta é uma demonstração. " +
-        "Os dados ainda não foram armazenados."
+    const formulario = event.target;
+    const botao = formulario.querySelector(
+        'button[type="submit"]'
     );
 
+    const dados = new FormData(formulario);
+
+    function campo(nome) {
+        return dados.get(nome)?.trim() || null;
+    }
+
+    botao.disabled = true;
+    botao.textContent = "Enviando...";
+
+    const { data, error } = await clienteSupabase.rpc(
+        "receber_pre_matricula",
+        {
+            p_nome_aluno: campo("aluno"),
+            p_data_nascimento: campo("nascimento"),
+            p_sexo: campo("sexo"),
+            p_cpf_estudante: campo("cpf"),
+            p_naturalidade: campo("naturalidade"),
+            p_nome_responsavel: campo("responsavel"),
+            p_parentesco: campo("parentesco"),
+            p_telefone: campo("telefone"),
+            p_endereco: campo("endereco"),
+            p_numero: campo("numero"),
+            p_bairro: campo("bairro"),
+            p_cidade: campo("municipio"),
+            p_cep: campo("cep"),
+            p_ano_escolar: campo("ano"),
+            p_turno: campo("turno"),
+            p_tipo_matricula: campo("situacao")
+        }
+    );
+
+    botao.disabled = false;
+    botao.textContent = "Enviar Pré-Matrícula";
+
+    if (error) {
+        console.error("Erro ao enviar:", error);
+
+        alert(
+            "Não foi possível enviar a pré-matrícula.\n" +
+            "Verifique sua conexão e tente novamente."
+        );
+
+        return;
+    }
+
+    alert(
+        "Pré-matrícula enviada com sucesso!\n\n" +
+        "A Secretaria Escolar recebeu seus dados."
+    );
+
+    formulario.reset();
 });
+
 
 
 </script>
