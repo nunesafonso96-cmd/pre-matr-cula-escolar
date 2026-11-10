@@ -144,8 +144,20 @@ footer {
 
 <main>
 <div class="container">
+    <section id="inicio" style="text-align:center; padding:30px 10px;">
+    <h2>Bem-vindo à Pré-Matrícula Escolar</h2>
 
-<form id="formulario">
+    <p style="margin:20px 0;">
+        Escola Municipal Lindalva Maria de Souza.
+        Realize aqui a pré-matrícula do estudante.
+    </p>
+
+    <button type="button" onclick="iniciarMatricula()">
+        Iniciar Pré-Matrícula
+    </button>
+</section>
+
+<form id="formulario" style="display:none;">
 
 <h2>1. Dados do estudante</h2>
 
@@ -299,11 +311,17 @@ Secretaria Escolar
 </footer>
 
 <script>
+function iniciarMatricula() {
+    document.getElementById("inicio").style.display = "none";
+
+    document.getElementById("formulario").style.display = "block";
+
+    window.scrollTo(0, 0);
+}
+
 document.getElementById("formulario").addEventListener("submit", function(event) {
     event.preventDefault();
-    alert("Formulário de demonstração. O sistema ainda não está conectado ao banco de dados.");
+
+    alert("O formulário está em demonstração. Em breve será conectado ao banco de dados.");
 });
 </script>
-
-</body>
-</html>
