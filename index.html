@@ -1,12 +1,15 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Pré-Matrícula Escolar | Escola Lindalva</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
@@ -27,7 +30,11 @@ header {
 
 header h1 {
     margin: 0 0 10px;
-    font-size: 24px;
+    font-size: 25px;
+}
+
+header p {
+    margin: 5px;
 }
 
 main {
@@ -43,15 +50,30 @@ main {
     box-shadow: 0 3px 12px #00000012;
 }
 
+.tela {
+    display: none;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+.inicio {
+    text-align: center;
+    padding: 35px 10px;
+}
+
+.inicio h2 {
+    border: none;
+    margin-top: 0;
+    font-size: 26px;
+}
+
 h2 {
     color: #166534;
     border-bottom: 2px solid #dcfce7;
     padding-bottom: 10px;
     margin-top: 30px;
-}
-
-h2:first-child {
-    margin-top: 0;
 }
 
 .grid {
@@ -66,13 +88,13 @@ h2:first-child {
     gap: 7px;
 }
 
-.campo.completo {
+.completo {
     grid-column: 1 / -1;
 }
 
 label {
-    font-weight: bold;
     font-size: 14px;
+    font-weight: bold;
 }
 
 input, select {
@@ -81,6 +103,7 @@ input, select {
     border: 1px solid #cbd5e1;
     border-radius: 6px;
     font-size: 15px;
+    background: white;
 }
 
 input:focus, select:focus {
@@ -89,299 +112,413 @@ input:focus, select:focus {
 }
 
 button {
-    margin-top: 30px;
-    width: 100%;
-    padding: 15px;
+    padding: 14px 20px;
     border: none;
     border-radius: 7px;
     background: #15803d;
     color: white;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 15px;
 }
 
 button:hover {
     background: #166534;
 }
 
+.botao-secundario {
+    background: #334155;
+}
+
+.botao-secundario:hover {
+    background: #1e293b;
+}
+
+.botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.botoes button {
+    flex: 1;
+}
+
 .aviso {
-    margin-top: 20px;
     color: #64748b;
     font-size: 13px;
     text-align: center;
+    margin-top: 20px;
+}
+
+.card {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 9px;
+}
+
+.card strong {
+    display: block;
+    color: #14532d;
+    font-size: 28px;
+    margin-top: 8px;
 }
 
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 25px;
     color: #64748b;
+    font-size: 13px;
 }
 
 @media(max-width: 600px) {
+
     .grid {
         grid-template-columns: 1fr;
     }
 
-    .campo.completo {
+    .completo {
         grid-column: auto;
     }
 
     .container {
         padding: 20px;
     }
+
+    .botoes {
+        flex-direction: column;
+    }
+
+    .botoes button {
+        width: 100%;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
     <h1>Escola Municipal Lindalva Maria de Souza</h1>
+
     <p>Sistema de Pré-Matrícula Escolar</p>
+
     <strong>São Miguel - RN</strong>
+
 </header>
 
 <main>
+
 <div class="container">
-    <section id="inicio" style="text-align:center; padding:30px 10px;">
-    <h2>Bem-vindo à Pré-Matrícula Escolar</h2>
 
-    <p style="margin:20px 0;">
-        Escola Municipal Lindalva Maria de Souza.
-        Realize aqui a pré-matrícula do estudante.
-    </p>
+    <!-- TELA INICIAL -->
 
-    <button type="button" onclick="iniciarMatricula()">
-        Iniciar Pré-Matrícula
-    </button>
-        <button type="button" onclick="abrirPainel()" style="background:#334155;">
-    Área da Secretaria
-</button>
-</section>
+    <section id="inicio" class="tela ativa">
 
-<form id="formulario" style="display:none;">
+        <div class="inicio">
 
-<h2>1. Dados do estudante</h2>
+            <h2>Bem-vindo!</h2>
 
-<div class="grid">
+            <p>
+                Sistema de Pré-Matrícula da
+                Escola Municipal Lindalva Maria de Souza.
+            </p>
 
-<div class="campo completo">
-<label>Nome completo do estudante *</label>
-<input type="text" name="aluno" required>
-</div>
+            <p>
+                Realize aqui a pré-matrícula do estudante
+                para o ano letivo de 2027.
+            </p>
 
-<div class="campo">
-<label>Data de nascimento *</label>
-<input type="date" name="nascimento" required>
-</div>
+            <button onclick="mostrarTela('formulario')">
+                Iniciar Pré-Matrícula
+            </button>
 
-<div class="campo">
-<label>Sexo *</label>
-<select name="sexo" required>
-<option value="">Selecione</option>
-<option>Masculino</option>
-<option>Feminino</option>
-</select>
-</div>
+            <br>
 
-<div class="campo">
-<label>CPF do estudante</label>
-<input type="text" name="cpf" placeholder="Opcional">
-</div>
+            <button class="botao-secundario"
+                onclick="mostrarTela('painel')">
+                Área da Secretaria
+            </button>
 
-<div class="campo">
-<label>Naturalidade</label>
-<input type="text" name="naturalidade">
-</div>
-
-</div>
-
-<h2>2. Dados do responsável</h2>
-
-<div class="grid">
-
-<div class="campo completo">
-<label>Nome completo do responsável *</label>
-<input type="text" name="responsavel" required>
-</div>
-
-<div class="campo">
-<label>Parentesco *</label>
-<select name="parentesco" required>
-<option value="">Selecione</option>
-<option>Pai</option>
-<option>Mãe</option>
-<option>Avô/Avó</option>
-<option>Tio/Tia</option>
-<option>Outro</option>
-</select>
-</div>
-
-<div class="campo">
-<label>Telefone/WhatsApp *</label>
-<input type="tel" name="telefone" required>
-</div>
-
-</div>
-
-<h2>3. Endereço</h2>
-
-<div class="grid">
-
-<div class="campo completo">
-<label>Rua ou comunidade *</label>
-<input type="text" name="endereco" required>
-</div>
-
-<div class="campo">
-<label>Número</label>
-<input type="text" name="numero">
-</div>
-
-<div class="campo">
-<label>Bairro</label>
-<input type="text" name="bairro">
-</div>
-
-<div class="campo">
-<label>Município *</label>
-<input type="text" name="municipio" value="São Miguel" required>
-</div>
-
-<div class="campo">
-<label>CEP</label>
-<input type="text" name="cep">
-</div>
-
-</div>
-
-<h2>4. Informações da matrícula</h2>
-
-<div class="grid">
-
-<div class="campo">
-<label>Ano escolar pretendido *</label>
-<select name="ano" required>
-<option value="">Selecione</option>
-<option>1º Ano</option>
-<option>2º Ano</option>
-<option>3º Ano</option>
-<option>4º Ano</option>
-<option>5º Ano</option>
-</select>
-</div>
-
-<div class="campo">
-<label>Turno pretendido *</label>
-<select name="turno" required>
-<option value="">Selecione</option>
-<option>Matutino</option>
-<option>Vespertino</option>
-</select>
-</div>
-
-<div class="campo">
-<label>Situação do estudante *</label>
-<select name="situacao" required>
-<option value="">Selecione</option>
-<option>Aluno novato</option>
-<option>Aluno veterano</option>
-</select>
-</div>
-
-<div class="campo">
-<label>Ano letivo</label>
-<input type="text" value="2027" readonly>
-</div>
-
-</div>
-
-<button type="submit">Enviar pré-matrícula</button>
-
-<p class="aviso">
-Esta é uma versão de demonstração. Os dados ainda não são
-armazenados. Aguarde a implantação do banco de dados.
-</p>
-
-</form>
-    
-<section id="painel" style="display:none;">
-
-    <h2>Painel Administrativo</h2>
-
-    <p>Secretaria Escolar - Ano Letivo 2027</p>
-
-    <div class="grid">
-
-        <div class="campo">
-            <label>Estudantes cadastrados</label>
-            <input type="text" value="0" readonly>
         </div>
 
-        <div class="campo">
-            <label>Pré-matrículas recebidas</label>
-            <input type="text" value="0" readonly>
+    </section>
+
+
+    <!-- FORMULÁRIO DE PRÉ-MATRÍCULA -->
+
+    <section id="formulario" class="tela">
+
+        <h2>1. Dados do estudante</h2>
+
+        <form id="formMatricula">
+
+            <div class="grid">
+
+                <div class="campo completo">
+                    <label>Nome completo do estudante *</label>
+                    <input type="text" name="aluno" required>
+                </div>
+
+                <div class="campo">
+                    <label>Data de nascimento *</label>
+                    <input type="date" name="nascimento" required>
+                </div>
+
+                <div class="campo">
+                    <label>Sexo *</label>
+                    <select name="sexo" required>
+                        <option value="">Selecione</option>
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>CPF do estudante</label>
+                    <input type="text" name="cpf">
+                </div>
+
+                <div class="campo">
+                    <label>Naturalidade</label>
+                    <input type="text" name="naturalidade">
+                </div>
+
+            </div>
+
+
+            <h2>2. Dados do responsável</h2>
+
+            <div class="grid">
+
+                <div class="campo completo">
+                    <label>Nome completo do responsável *</label>
+                    <input type="text" name="responsavel" required>
+                </div>
+
+                <div class="campo">
+                    <label>Parentesco *</label>
+                    <select name="parentesco" required>
+                        <option value="">Selecione</option>
+                        <option>Pai</option>
+                        <option>Mãe</option>
+                        <option>Avô/Avó</option>
+                        <option>Tio/Tia</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Telefone/WhatsApp *</label>
+                    <input type="tel" name="telefone" required>
+                </div>
+
+            </div>
+
+
+            <h2>3. Endereço</h2>
+
+            <div class="grid">
+
+                <div class="campo completo">
+                    <label>Rua ou comunidade *</label>
+                    <input type="text" name="endereco" required>
+                </div>
+
+                <div class="campo">
+                    <label>Número</label>
+                    <input type="text" name="numero">
+                </div>
+
+                <div class="campo">
+                    <label>Bairro</label>
+                    <input type="text" name="bairro">
+                </div>
+
+                <div class="campo">
+                    <label>Município *</label>
+                    <input type="text" name="municipio"
+                        value="São Miguel" required>
+                </div>
+
+                <div class="campo">
+                    <label>CEP</label>
+                    <input type="text" name="cep">
+                </div>
+
+            </div>
+
+
+            <h2>4. Informações da matrícula</h2>
+
+            <div class="grid">
+
+                <div class="campo">
+                    <label>Ano escolar pretendido *</label>
+                    <select name="ano" required>
+                        <option value="">Selecione</option>
+                        <option>1º Ano</option>
+                        <option>2º Ano</option>
+                        <option>3º Ano</option>
+                        <option>4º Ano</option>
+                        <option>5º Ano</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Turno pretendido *</label>
+                    <select name="turno" required>
+                        <option value="">Selecione</option>
+                        <option>Matutino</option>
+                        <option>Vespertino</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Situação do estudante *</label>
+                    <select name="situacao" required>
+                        <option value="">Selecione</option>
+                        <option>Aluno novato</option>
+                        <option>Aluno veterano</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Ano letivo</label>
+                    <input type="text" value="2027" readonly>
+                </div>
+
+            </div>
+
+
+            <p class="aviso">
+                Versão de demonstração. Os dados ainda não
+                são enviados nem armazenados.
+            </p>
+
+            <div class="botoes">
+
+                <button type="submit">
+                    Enviar Pré-Matrícula
+                </button>
+
+                <button type="button"
+                    class="botao-secundario"
+                    onclick="mostrarTela('inicio')">
+                    Voltar
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- PAINEL ADMINISTRATIVO -->
+
+    <section id="painel" class="tela">
+
+        <h2>Painel Administrativo</h2>
+
+        <p>
+            Secretaria Escolar - Ano Letivo 2027
+        </p>
+
+        <div class="grid">
+
+            <div class="card">
+                <label>Estudantes cadastrados</label>
+                <strong>0</strong>
+            </div>
+
+            <div class="card">
+                <label>Pré-matrículas recebidas</label>
+                <strong>0</strong>
+            </div>
+
         </div>
 
-    </div>
+        <h2>Gerenciamento de estudantes</h2>
 
-    <h2>Gerenciamento de estudantes</h2>
+        <div class="campo">
+            <label>Pesquisar estudante</label>
+            <input type="search"
+                placeholder="Digite o nome do estudante"
+                disabled>
+        </div>
 
-    <div class="campo">
-        <label>Pesquisar estudante</label>
-        <input type="search" placeholder="Digite o nome do estudante">
-    </div>
+        <p class="aviso">
+            A consulta de estudantes será disponibilizada
+            após a conexão com o banco de dados.
+        </p>
 
-    <p style="margin-top:20px; color:#64748b;">
-        Os cadastros aparecerão nesta área quando o banco
-        de dados estiver conectado.
-    </p>
+        <button class="botao-secundario"
+            onclick="mostrarTela('inicio')">
+            Voltar ao início
+        </button>
 
-    <button type="button" onclick="voltarInicio()"
-        style="background:#475569;">
-        Voltar ao início
-    </button>
-
-</section>
+    </section>
 
 </div>
+
 </main>
 
+
 <footer>
-Escola Municipal Lindalva Maria de Souza<br>
-Secretaria Escolar
+
+    Escola Municipal Lindalva Maria de Souza
+
+    <br>
+
+    Secretaria Escolar - São Miguel/RN
+
 </footer>
 
-function iniciarMatricula() {
-    document.getElementById("inicio").style.display = "none";
 
-    document.getElementById("formulario").style.display = "block";
+<!-- JAVASCRIPT: TODAS AS FUNÇÕES FICAM AQUI -->
 
-    window.scrollTo(0, 0);
+<script>
+
+function mostrarTela(id) {
+
+    const telas = document.querySelectorAll(".tela");
+
+    telas.forEach(function(tela) {
+        tela.classList.remove("ativa");
+    });
+
+    document.getElementById(id).classList.add("ativa");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
 }
 
-document.getElementById("formulario").addEventListener("submit", function(event) {
+
+document.getElementById("formMatricula")
+.addEventListener("submit", function(event) {
+
     event.preventDefault();
 
-    alert("O formulário está em demonstração. Em breve será conectado ao banco de dados.");
+    alert(
+        "Formulário preenchido com sucesso!\n\n" +
+        "Esta é uma demonstração. " +
+        "Os dados ainda não foram armazenados."
+    );
+
 });
-    function abrirPainel() {
-    document.getElementById("inicio").style.display = "none";
-    document.getElementById("formulario").style.display = "none";
-    document.getElementById("painel").style.display = "block";
-    window.scrollTo(0, 0);
-}
 
-function voltarInicio() {
-    </script>
 
-</body>
-</html>
-    document.getElementById("painel").style.display = "none";
-    document.getElementById("inicio").style.display = "block";
-    window.scrollTo(0, 0);
-}
 </script>
+
 </body>
+
 </html>
