@@ -155,6 +155,9 @@ footer {
     <button type="button" onclick="iniciarMatricula()">
         Iniciar Pré-Matrícula
     </button>
+        <button type="button" onclick="abrirPainel()" style="background:#334155;">
+    Área da Secretaria
+</button>
 </section>
 
 <form id="formulario" style="display:none;">
@@ -302,6 +305,46 @@ armazenados. Aguarde a implantação do banco de dados.
 </p>
 
 </form>
+    
+<section id="painel" style="display:none;">
+
+    <h2>Painel Administrativo</h2>
+
+    <p>Secretaria Escolar - Ano Letivo 2027</p>
+
+    <div class="grid">
+
+        <div class="campo">
+            <label>Estudantes cadastrados</label>
+            <input type="text" value="0" readonly>
+        </div>
+
+        <div class="campo">
+            <label>Pré-matrículas recebidas</label>
+            <input type="text" value="0" readonly>
+        </div>
+
+    </div>
+
+    <h2>Gerenciamento de estudantes</h2>
+
+    <div class="campo">
+        <label>Pesquisar estudante</label>
+        <input type="search" placeholder="Digite o nome do estudante">
+    </div>
+
+    <p style="margin-top:20px; color:#64748b;">
+        Os cadastros aparecerão nesta área quando o banco
+        de dados estiver conectado.
+    </p>
+
+    <button type="button" onclick="voltarInicio()"
+        style="background:#475569;">
+        Voltar ao início
+    </button>
+
+</section>
+
 </div>
 </main>
 
@@ -325,3 +368,15 @@ document.getElementById("formulario").addEventListener("submit", function(event)
     alert("O formulário está em demonstração. Em breve será conectado ao banco de dados.");
 });
 </script>
+    function abrirPainel() {
+    document.getElementById("inicio").style.display = "none";
+    document.getElementById("formulario").style.display = "none";
+    document.getElementById("painel").style.display = "block";
+    window.scrollTo(0, 0);
+}
+
+function voltarInicio() {
+    document.getElementById("painel").style.display = "none";
+    document.getElementById("inicio").style.display = "block";
+    window.scrollTo(0, 0);
+}
